@@ -1,0 +1,29 @@
+task: xstory_cloze_zh
+dataset_path: juletxara/xstory_cloze
+dataset_name: zh
+output_type: multiple_choice
+training_split: train
+validation_split: eval
+test_split: null
+
+# 1. Le Prompt
+# On concatène les 4 phrases de l'histoire.
+# "续写：" signifie "Suite / Continuation :" en chinois, ce qui est plus naturel pour une histoire que "Réponse".
+doc_to_text: "故事：{{input_sentence_1}}{{input_sentence_2}}{{input_sentence_3}}{{input_sentence_4}}\n续写："
+
+# 2. Les Choix
+# Le dataset fournit deux fins possibles : sentence_quiz1 et sentence_quiz2
+doc_to_choice: "{{[sentence_quiz1, sentence_quiz2]}}"
+
+# 3. La Cible
+# La colonne 'answer_right_ending' contient 1 ou 2.
+# Python commence à compter à 0, donc on doit faire -1 (1 devient 0, 2 devient 1).
+doc_to_target: "{{answer_right_ending - 1}}"
+
+target_delimiter: ""
+metric_list:
+  - metric: acc
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 1.0

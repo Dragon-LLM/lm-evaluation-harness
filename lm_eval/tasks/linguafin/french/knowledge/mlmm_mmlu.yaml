@@ -1,0 +1,35 @@
+task: mlmm_mmlu_fr
+dataset_path: jon-tow/okapi_mmlu
+dataset_name: fr
+output_type: multiple_choice
+
+dataset_kwargs:
+  trust_remote_code: true
+
+training_split: null
+validation_split: test
+test_split: test
+fewshot_split: test
+
+# 1. Prompt (Cloze)
+doc_to_text: "Question : {{question}}\nRéponse :"
+
+# 2. Liste des textes (ex: "Mauvais, pas mauvais")
+doc_to_choice: "{{choices}}"
+
+# 3. Conversion Lettre -> Index
+# Le dataset donne 'B'.
+# 'ABCD'.index('B') donne 1.
+# Le harnais comprendra : "La bonne réponse est l'élément 1 de la liste choices".
+doc_to_target: "{{ 'ABCD'.index(answer) }}"
+
+target_delimiter: " "
+metric_list:
+  - metric: acc
+    aggregation: mean
+    higher_is_better: true
+  - metric: acc_norm
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 4.0

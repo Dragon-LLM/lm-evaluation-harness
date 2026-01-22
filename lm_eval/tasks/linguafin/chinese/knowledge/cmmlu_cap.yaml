@@ -1,0 +1,31 @@
+task: cmmlu_agronomy_cap
+dataset_path: lmlmcat/cmmlu
+dataset_name: agronomy
+output_type: multiple_choice
+training_split: train
+validation_split: test
+test_split: null
+
+dataset_kwargs:
+  trust_remote_code: true
+
+# 1. Le Prompt
+# CMMLU n'a pas de colonne "context", juste "Question".
+doc_to_text: "问：{{Question}}\n答："
+
+# 2. Reconstitution de la liste des choix
+# On crée une liste [A, B, C, D] à la volée avec Jinja
+doc_to_choice: "{{[A, B, C, D]}}"
+
+# 3. La cible
+# La colonne "Answer" contient "A", "B", "C" ou "D".
+# On convertit cette lettre en index (A=0, B=1...) pour pointer vers la bonne option dans doc_to_choice.
+doc_to_target: "{{'ABCD'.index(Answer)}}"
+
+target_delimiter: ""
+metric_list:
+  - metric: acc_norm
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 1.0

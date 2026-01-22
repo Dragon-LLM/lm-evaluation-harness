@@ -1,0 +1,18 @@
+task: c3_zho
+dataset_path: clue/clue
+dataset_name: c3
+training_split: train
+validation_split: validation
+test_split: null          # no answer in the test
+fewshot_split: train
+output_type: multiple_choice
+doc_to_text: "文章：{{context | join('\n')}}\n问：{{question}}\n答："
+doc_to_choice: choice
+doc_to_target: "{{choice.index(answer)}}"
+target_delimiter: ""
+metric_list:
+  - metric: acc_norm
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 0

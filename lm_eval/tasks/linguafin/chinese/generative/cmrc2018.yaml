@@ -1,0 +1,30 @@
+task: cmrc2018
+dataset_path: hfl/cmrc2018
+dataset_name: null  
+output_type: generate_until
+training_split: train
+validation_split: validation
+test_split: test
+
+doc_to_text: "文章：{{context}}\n问：{{question}}\n答："
+
+doc_to_target: "{{answers.text[0]}}"
+
+generation_kwargs:
+  until:
+    - "\n"
+  do_sample: false   # On veut la réponse la plus probable (greedy decoding)
+  temperature: 0.0
+
+metric_list:
+  - metric: exact_match
+    aggregation: mean
+    higher_is_better: true
+    ignore_case: true
+    ignore_punctuation: true
+  - metric: f1
+    aggregation: mean
+    higher_is_better: true
+
+metadata:
+  version: 1.0

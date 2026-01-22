@@ -1,0 +1,40 @@
+task: mlmm_hellaswag_fr
+dataset_path: jon-tow/okapi_hellaswag
+dataset_name: fr
+output_type: multiple_choice
+
+dataset_kwargs:
+  trust_remote_code: true
+
+training_split: null
+validation_split: validation
+test_split: null
+fewshot_split: validation
+
+# 1. Le Prompt
+# HellaSwag coupe le contexte en deux parties : ctx_a et ctx_b.
+# On les recolle pour former le début de l'histoire.
+doc_to_text: "{{ctx_a}} {{ctx_b}}"
+
+# 2. Les Choix
+# La colonne 'endings' contient déjà la liste des 4 fins possibles.
+doc_to_choice: "{{endings}}"
+
+# 3. La Cible
+# La colonne 'label' est un chiffre (0, 1, 2 ou 3) qui pointe vers la bonne fin.
+# On force la conversion en 'int' par sécurité, même si c'est souvent déjà le cas.
+doc_to_target: "{{label | int}}"
+
+# 4. Formatage
+# Comme le modèle doit compléter une phrase, on ajoute un espace entre le contexte et la réponse.
+target_delimiter: " "
+
+metric_list:
+  - metric: acc
+    aggregation: mean
+    higher_is_better: true
+  - metric: acc_norm
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 1.0
