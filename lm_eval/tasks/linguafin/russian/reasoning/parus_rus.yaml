@@ -1,0 +1,31 @@
+task: parus_rus
+dataset_path: ai-forever/MERA
+dataset_name: parus
+output_type: multiple_choice
+
+training_split: null
+validation_split: validation
+test_split: null
+
+# On formate l'instruction avec les données de 'inputs'
+# On s'arrête juste avant la réponse pour laisser le modèle compléter
+doc_to_text: "{{ instruction.format(premise=inputs.premise, choice1=inputs.choice1, choice2=inputs.choice2).split('Напиши ответ')[0] }}Ответ:"
+
+# On donne les deux options textuelles pour le mode CF
+doc_to_choice: 
+  - "{{inputs.choice1}}"
+  - "{{inputs.choice2}}"
+
+# On transforme "1"/"2" en index 0/1
+doc_to_target: "{{ (outputs | int) - 1 }}"
+
+target_delimiter: " "
+metric_list:
+  - metric: acc
+    aggregation: mean
+    higher_is_better: true
+  - metric: acc_norm
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 1.0

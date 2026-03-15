@@ -2,7 +2,7 @@ task: cmmlu_agronomy_cap
 dataset_path: lmlmcat/cmmlu
 dataset_name: agronomy
 output_type: multiple_choice
-training_split: train
+training_split: dev
 validation_split: test
 test_split: null
 

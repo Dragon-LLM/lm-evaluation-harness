@@ -1,0 +1,3 @@
+include: ../rummlu_base.yaml
+task: rummlu_philosophy
+dataset_name: philosophy

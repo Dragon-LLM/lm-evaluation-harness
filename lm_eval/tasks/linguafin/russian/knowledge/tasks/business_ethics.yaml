@@ -1,0 +1,3 @@
+include: ../rummlu_base.yaml
+task: rummlu_business_ethics
+dataset_name: business_ethics

@@ -27,6 +27,7 @@ ipython_config.py
 
 # Output and data
 output/
+results/
 data/
 temp/
 test_logs/
@@ -48,3 +49,9 @@ examples/wandb/
 
 #uv
 uv.lock
+results*/
+offload/
+*.log
+core.*
+__pycache__/
+*.egg-info/

@@ -1,0 +1,24 @@
+# rummlu_base.yaml
+dataset_path: gametwix/rummlu
+output_type: multiple_choice
+validation_split: test
+test_split: test
+
+doc_to_text: "{{ instruction.format(subject=inputs.subject, text=inputs.text, option_a=inputs.option_a, option_b=inputs.option_b, option_c=inputs.option_c, option_d=inputs.option_d).split('Ответ:')[0] }}Ответ:"
+
+doc_to_choice: 
+  - "{{inputs.option_a}}"
+  - "{{inputs.option_b}}"
+  - "{{inputs.option_c}}"
+  - "{{inputs.option_d}}"
+
+doc_to_target: "{{ ['A','B','C','D'].index(outputs) }}"
+
+target_delimiter: " "
+metric_list:
+  - metric: acc
+    aggregation: mean
+    higher_is_better: true
+  - metric: acc_norm
+    aggregation: mean
+    higher_is_better: true

@@ -961,9 +961,10 @@ class HFLM(TemplateLM):
                     input_ids=inps, attention_mask=attn_mask, labels=labels
                 ).logits
 
+            AutoModelForVision2Seq = getattr(transformers, "AutoModelForVision2Seq", None)
             assert self.AUTO_MODEL_CLASS in (
                 transformers.AutoModelForCausalLM,
-                transformers.AutoModelForVision2Seq,
+                AutoModelForVision2Seq,
             )
             return self.model(inps).logits
 

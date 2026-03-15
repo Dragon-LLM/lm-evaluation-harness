@@ -1,0 +1,11 @@
+include: humaneval
+task: humaneval_bpb
+dataset_path: openai_humaneval
+output_type: loglikelihood_rolling
+training_split: test
+test_split: test
+metric_list:
+  - metric: bpb
+    aggregation: mean
+  - metric: byte_perplexity
+    aggregation: mean
